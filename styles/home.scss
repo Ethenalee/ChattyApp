@@ -1,3 +1,103 @@
-h1 {
-  color: tomato;
-}
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
+
+    html {
+      min-height: 100%;
+    }
+    body {
+      background: linear-gradient(#fbe3eb, #3c233c);
+      color: black;
+      font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+      font-size: 14px;
+      margin: 70px 0;
+    }
+
+    .chatbar {
+      bottom: 0;
+      display: flex;
+      left: 0;
+      padding: 5px;
+      position: fixed;
+      right: 0;
+    }
+
+    .chatbar-message,
+    .chatbar-username {
+      border: 1px solid white;
+      display: block;
+      height: 40px;
+      line-height: 40px;
+      margin: 5px;
+      padding: 0 9px;
+      background: transparent;
+      color: white;
+    }
+
+    .chatbar-message {
+      flex: 8;
+    }
+
+    .chatbar-username {
+      flex: 2;
+    }
+
+    .message {
+      display: flex;
+      padding: 5px;
+      border-radius: 20px;
+      margin: 1%;
+      background: white;
+      color: #3c043c;
+    }
+
+
+    .message.system {
+      font-style: italic;
+      padding: 5px 20px;
+    }
+
+    .message-content,
+    .message-username {
+      overflow: hidden;
+      margin: 5px;
+      padding: 0 10px;
+    }
+
+    .message-content {
+      flex: 8;
+    }
+
+    .message-username {
+      flex: 2;
+      font-weight: 700;
+    }
+
+    .navbar {
+      background: transparent;
+      height: 60px;
+      left: 0;
+      padding: 0 10px;
+      position: fixed;
+      right: 0;
+      top: 0;
+      color: #3c043c;
+    }
+
+    .navbar-brand {
+      color: inherit;
+      display: block;
+      float: left;
+      font-weight: 900;
+      font-size: 40px;
+      height: 60px;
+      line-height: 60px;
+      padding: 0 10px;
+      text-decoration: none;
+    }
+
+
+    .navbar-logo {
+      display: block;
+      float: left;
+      height: 60px;
+    }

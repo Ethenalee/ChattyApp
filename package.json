@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/noahlotzer/react-simple-boilerplate.git"
+    "url": "https://github.com/Ethenalee/ChattyApp"
   },
   "keywords": [
     "react",
@@ -19,12 +19,9 @@
     "edit",
     "webpack"
   ],
-  "author": "Noah-Jerome Lotzer <n.lotzer@neusta.de>",
+  "author": "Ethena",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/noahlotzer/react-simple-boilerplate/issues"
-  },
-  "homepage": "https://github.com/noahlotzer/react-simple-boilerplate",
+  "homepage": "https://github.com/Ethenalee/ChattyApp",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -45,7 +42,9 @@
     "webpack-dev-server": "2.3.0"
   },
   "dependencies": {
+    "babel-install": "^2.1.0",
     "react": "15.4.2",
-    "react-dom": "15.4.2"
+    "react-dom": "15.4.2",
+    "url-loader": "^1.1.2"
   }
 }
