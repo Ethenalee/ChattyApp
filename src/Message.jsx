@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 
 class Message extends Component {
-
+  checkImg = () => {
+    if(this.props.message.content.includes('jpg', 'png','gif')) {
+      return <img className="img" src={this.props.message.content} />
+    } else {
+      return this.props.message.content;
+    }
+  }
   render() {
     return (
         <div className="message">
           <span className="message-username">{this.props.message.username}</span>
-          <span className="message-content">{this.props.message.content}</span>
+          <span className="message-content">{this.checkImg()}</span>
         </div>
     );
   }
