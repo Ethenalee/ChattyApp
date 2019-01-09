@@ -1,35 +1,37 @@
 import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
+const uuid = require('uuid/v4');
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: {name: "Bob"},
-      messages: [
-        {
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-          id: 1
-        },
-        {
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good.",
-          id: 2
-        }
-      ]
+      messages: []
     }
   }
 
   componentDidMount() {
-    console.log("componentDidMount <App />");
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-      const messages = this.state.messages.concat(newMessage)
-      this.setState({messages: messages})
-    }, 3000);
+    this.socket = new WebSocket('ws://localhost:3001')
+    this.socket.onopen = () => {
+      console.log('Connected to WebSocket');
+    };
+
+    this.socket.onmessage = payload => {
+      console.log('Got message from server', payload);
+      const json = JSON.parse(payload.data);
+
+      this.setState({
+        messages: [...this.state.messages, json]
+      });
+
+      }
+
+    this.socket.onclose = () => {
+      console.log('Disconnected from the WebSocket');
+    };
+
   }
 
   render() {
@@ -47,14 +49,14 @@ class App extends Component {
     );
   }
 
-  getRandom = (min) => {
-    return Math.random() + min;
-  }
 
-  addMessage = (content) => {
-    const newMessage = {id: this.getRandom(3), username: this.state.currentUser.name, content: content};
-    const messages = this.state.messages.concat(newMessage)
-    this.setState({messages: messages})
+  addMessage = content => {
+    if(content.firstChild.value !== '' && content.lastChild.value !== '') {
+      this.socket.send(JSON.stringify({
+        id: uuid(), username: content.firstChild.value, content: content.lastChild.value
+      }));
+      this.setState({currentUser: {name: content.firstChild.value}})
+    }
   }
 
 
