@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 
 class Message extends Component {
   checkImg = () => {
-    if(this.props.message.content.includes('jpg', 'png','gif')) {
+    let regex = /(\.(?:png|jpg|gif))/i;
+    if(this.props.message.content.match(regex)) {
       return <img className="img" src={this.props.message.content} />
     } else {
       return this.props.message.content;
