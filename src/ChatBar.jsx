@@ -17,7 +17,6 @@ class ChatBar extends Component {
       </footer>
     );
   }
-
 }
 export default ChatBar;
 
