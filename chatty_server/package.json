@@ -12,6 +12,7 @@
   "dependencies": {
     "exact": "^0.8.0",
     "express": "^4.16.4",
+    "uuid": "^3.3.2",
     "ws": "6.1.2"
   }
 }
