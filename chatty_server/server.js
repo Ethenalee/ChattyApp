@@ -4,11 +4,21 @@ const http = require('http');
 const uuid = require('uuid/v4');
 const WebSocket = require('ws');
 const color = ['CornflowerBlue ', 'DarkBlue', 'SlateBlue', 'MidnightBlue'];
+let user = 0;
+const addUsers = () => {
+  user += 1;
+  return user
+}
+const deleteUsers = () => {
+  user -= 1;
+  return user
+}
 const setColor = (color) => {
     const last = color.shift();
     color.push(last);
     return last;
 }
+
 
 
 // Set the port to 3001
@@ -38,6 +48,7 @@ wss.broadcastJSON = obj => wss.broadcast(JSON.stringify(obj));
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  wss.broadcastJSON({users: addUsers(user), type: 'userlogin'});
   // receiving message from client
   ws.on('message', function incoming(data) {
     const obj = JSON.parse(data);
@@ -51,7 +62,10 @@ wss.on('connection', (ws) => {
     };
     wss.broadcastJSON(objectToBroadcast);
   });
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', function close() { console.log('Client disconnected')
+    wss.broadcastJSON({users: deleteUsers(user), type: 'userlogout'});
+  }
+  );
   ws.send(JSON.stringify({
     color: setColor(color),
     type: 'client_connect'

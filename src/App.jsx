@@ -9,7 +9,8 @@ class App extends Component {
     this.state = {
       currentUser: {name: "Bob"},
       messages: [],
-      currentColor: ''
+      currentColor: '',
+      users: ''
     }
   }
 
@@ -22,13 +23,16 @@ class App extends Component {
     this.socket.onmessage = payload => {
       console.log('Got message from server', payload);
       const json = JSON.parse(payload.data);
-      console.log(json);
       if(json.type === 'client_content') {
         this.setState({
           messages: [...this.state.messages, json]
         });
       } else if(json.type === 'client_connect') {
         this.setState({currentColor: json.color})
+      } else if(json.type === 'userlogin') {
+        this.setState({users: json.users})
+      } else if(json.type === 'userlogout') {
+        this.setState({users: json.users})
       }
     }
 
@@ -43,6 +47,7 @@ class App extends Component {
           <nav className="navbar">
               <img className="navbar-logo" src={require('./logo.png')} />
               <a href="/" className="navbar-brand">Chatty</a>
+              <h3 className="online"> {this.state.users} Online </h3>
           </nav>
       {/*Pass messages using props*/}
           <MessageList messages={this.state.messages} />
@@ -51,6 +56,7 @@ class App extends Component {
       </div>
     );
   }
+
   //addMessage and change currentUser//
   addMessage = content => {
     if(content.firstChild.value !== '' && content.lastChild.value !== '') {

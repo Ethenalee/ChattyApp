@@ -5,7 +5,6 @@ class ChatBar extends Component {
     if(e.key === "Enter") {
       this.props.addMessage(e.target.parentElement);
       e.target.value = "";
-      console.log(this.props.currentUser.name);
     }
   }
 
