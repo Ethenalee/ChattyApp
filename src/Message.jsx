@@ -3,10 +3,15 @@ import React, {Component} from 'react';
 class Message extends Component {
   // check content is img or not
   checkImg = () => {
-    let regex = /(^https?:\/\/.*\.(?:png|jpg|gif))/i;
+    let regex = /.*(https?:\/\/.*\.(?:png|jpg|gif))/i;
+    console.log(this.props.message.content.match(regex))
     if(this.props.message.content.match(regex)) {
-      console.log(this.props.message.content.match(regex));
-      return <img className="img" src={this.props.message.content} />
+      return (
+        <div>
+        <span>{this.props.message.content.match(regex)[0].replace(this.props.message.content.match(regex)[1], '')}</span><br />
+        <img className="img" src={this.props.message.content.match(regex)[1]} />
+        </div>
+        )
     } else {
       return this.props.message.content;
     }
