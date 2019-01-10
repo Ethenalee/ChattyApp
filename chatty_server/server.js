@@ -4,22 +4,24 @@ const http = require('http');
 const uuid = require('uuid/v4');
 const WebSocket = require('ws');
 const color = ['CornflowerBlue ', 'DarkBlue', 'SlateBlue', 'MidnightBlue'];
+//initial user is zero
 let user = 0;
+// add users
 const addUsers = () => {
   user += 1;
   return user
 }
+//delete users
 const deleteUsers = () => {
   user -= 1;
   return user
 }
+//select color from array
 const setColor = (color) => {
     const last = color.shift();
     color.push(last);
     return last;
 }
-
-
 
 // Set the port to 3001
 const PORT = 3001;
@@ -42,13 +44,16 @@ wss.broadcast = function broadcast(data) {
     }
   });
 };
+
 wss.broadcastJSON = obj => wss.broadcast(JSON.stringify(obj));
-
-
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
-  wss.broadcastJSON({users: addUsers(user), type: 'userlogin'});
+  // once its connect send users with updated num
+  wss.broadcastJSON({
+    users: addUsers(user),
+    type: 'userlogin'
+  });
   // receiving message from client
   ws.on('message', function incoming(data) {
     const obj = JSON.parse(data);
@@ -62,10 +67,16 @@ wss.on('connection', (ws) => {
     };
     wss.broadcastJSON(objectToBroadcast);
   });
-  ws.on('close', function close() { console.log('Client disconnected')
-    wss.broadcastJSON({users: deleteUsers(user), type: 'userlogout'});
-  }
+  ws.on('close', function close() {
+    console.log('Client disconnected')
+    // once its disconnect send users with updated num
+    wss.broadcastJSON({
+      users: deleteUsers(user),
+      type: 'userlogout'
+    });
+    }
   );
+  //once user connect send set color info
   ws.send(JSON.stringify({
     color: setColor(color),
     type: 'client_connect'

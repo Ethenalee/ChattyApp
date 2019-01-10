@@ -46,7 +46,7 @@
       background: white;
       padding: 5px;
       border-radius: 20px;
-      margin: 1%;
+      margin: 10px;
       color: #3c043c;
     }
 
@@ -78,10 +78,10 @@
     .message .notification {
       background: transparent;
       display: flex;
-      padding: 5px;
       margin-left: 5%;
       color: #3c043c;
       font-style: italic;
+      font-weight: bold;
     }
 
     .navbar {

@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: "Bob"},
+      currentUser: {name: "Anonymous"},
       messages: [],
       currentColor: '',
       users: ''
@@ -34,8 +34,7 @@ class App extends Component {
       } else if(json.type === 'userlogout') {
         this.setState({users: json.users})
       }
-    }
-
+    };
     this.socket.onclose = () => {
       console.log('Disconnected from the WebSocket');
     };
@@ -51,12 +50,13 @@ class App extends Component {
           </nav>
       {/*Pass messages using props*/}
           <MessageList messages={this.state.messages} currentUser={this.state.currentUser}/>
-      {/*Pass currentUser using props*/}
+      {/*Pass currentUser functions using props*/}
           <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} changeName={this.changeName} />
       </div>
     );
   }
 
+  //change current user to new name and send info to message
   changeName = (newName) => {
     if(this.state.currentUser.name !== newName) {
       this.socket.send(JSON.stringify({
@@ -65,7 +65,9 @@ class App extends Component {
         content: `${this.state.currentUser.name} has changed their username to ${newName}`,
         type: 'client_notification'
       }))
-      this.setState({currentUser: {name: newName}})
+      this.setState({
+        currentUser: {name: newName}
+      })
     }
   };
   //addMessage and change currentUser//
@@ -75,7 +77,11 @@ class App extends Component {
         this.changeName(content.firstChild.value)
       }
       this.socket.send(JSON.stringify({
-        id: uuid(), username: this.state.currentUser.name, content: content.lastChild.value, color: this.state.currentColor, type: 'client_content'
+        id: uuid(),
+        username: this.state.currentUser.name,
+        content: content.lastChild.value,
+        color: this.state.currentColor,
+        type: 'client_content'
       }));
     }
   };

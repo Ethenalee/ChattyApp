@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 class Message extends Component {
+  // check content is img or not
   checkImg = () => {
     let regex = /(\.(?:png|jpg|gif))/i;
     if(this.props.message.content.match(regex)) {
@@ -8,7 +9,8 @@ class Message extends Component {
     } else {
       return this.props.message.content;
     }
-  }
+  };
+  // check Msg is notification or content user type
   checkMsg = () => {
     if(this.props.message.type === 'client_notification') {
       return (
@@ -24,7 +26,7 @@ class Message extends Component {
         </div>
       )
     }
-  }
+  };
 
   render() {
     return (

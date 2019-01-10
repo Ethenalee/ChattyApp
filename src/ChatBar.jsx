@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 
 class ChatBar extends Component {
+  // add message
   pressKey = (e) => {
     if(e.key === "Enter") {
       this.props.addMessage(e.target.parentElement);
       e.target.value = "";
     }
-  }
-
+  };
+  // change name
   changeName = (e) => {
     if(e.key === "Enter") {
       this.props.changeName(e.target.value);
     }
-  }
+  };
 
   render() {
     return (
