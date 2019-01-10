@@ -58,7 +58,7 @@ wss.on('connection', (ws) => {
       content: obj.content,
       username: obj.username,
       color: obj.color,
-      type: 'client_content'
+      type: obj.type
     };
     wss.broadcastJSON(objectToBroadcast);
   });

@@ -41,12 +41,12 @@
       flex: 2;
     }
 
-    .message {
+    .usermessage {
       display: flex;
+      background: white;
       padding: 5px;
       border-radius: 20px;
       margin: 1%;
-      background: white;
       color: #3c043c;
     }
 
@@ -73,6 +73,15 @@
 
     .message-content .img {
       max-width: 60%;
+    }
+
+    .message .notification {
+      background: transparent;
+      display: flex;
+      padding: 5px;
+      margin-left: 5%;
+      color: #3c043c;
+      font-style: italic;
     }
 
     .navbar {

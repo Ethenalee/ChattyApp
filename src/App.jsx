@@ -23,7 +23,7 @@ class App extends Component {
     this.socket.onmessage = payload => {
       console.log('Got message from server', payload);
       const json = JSON.parse(payload.data);
-      if(json.type === 'client_content') {
+      if(json.type === 'client_content' || json.type === 'client_notification') {
         this.setState({
           messages: [...this.state.messages, json]
         });
@@ -50,21 +50,34 @@ class App extends Component {
               <h3 className="online"> {this.state.users} Online </h3>
           </nav>
       {/*Pass messages using props*/}
-          <MessageList messages={this.state.messages} />
+          <MessageList messages={this.state.messages} currentUser={this.state.currentUser}/>
       {/*Pass currentUser using props*/}
-          <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} />
+          <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} changeName={this.changeName} />
       </div>
     );
   }
 
+  changeName = (newName) => {
+    if(this.state.currentUser.name !== newName) {
+      this.socket.send(JSON.stringify({
+        id: uuid(),
+        username: '',
+        content: `${this.state.currentUser.name} has changed their username to ${newName}`,
+        type: 'client_notification'
+      }))
+      this.setState({currentUser: {name: newName}})
+    }
+  };
   //addMessage and change currentUser//
   addMessage = content => {
     if(content.firstChild.value !== '' && content.lastChild.value !== '') {
+      if(this.state.currentUser.name != content.firstChild.value) {
+        this.changeName(content.firstChild.value)
+      }
       this.socket.send(JSON.stringify({
-        id: uuid(), username: content.firstChild.value, content: content.lastChild.value, color: this.state.currentColor
+        id: uuid(), username: this.state.currentUser.name, content: content.lastChild.value, color: this.state.currentColor, type: 'client_content'
       }));
-      this.setState({currentUser: {name: content.firstChild.value}})
     }
-  }
+  };
 }
 export default App;
