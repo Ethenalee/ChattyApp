@@ -4,7 +4,6 @@ class Message extends Component {
   // check content is img or not
   checkImg = () => {
     let regex = /.*(https?:\/\/.*\.(?:png|jpg|gif))/i;
-    console.log(this.props.message.content.match(regex))
     if(this.props.message.content.match(regex)) {
       return (
         <div>

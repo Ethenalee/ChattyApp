@@ -23,7 +23,7 @@ class App extends Component {
     this.socket.onmessage = payload => {
       console.log('Got message from server', payload);
       const json = JSON.parse(payload.data);
-      if(json.type === 'client_content' || json.type === 'client_notification') {
+      if(json.type === 'client_content' || json.type === 'client_notification' || json.type === 'giphy') {
         this.setState({
           messages: [...this.state.messages, json]
         });

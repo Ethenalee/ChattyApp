@@ -3,7 +3,11 @@ const SocketServer = require('ws').Server;
 const http = require('http');
 const uuid = require('uuid/v4');
 const WebSocket = require('ws');
+require('dotenv').config();
+const fetch = require('node-fetch');
+const querystring = require('querystring');
 const color = ['CornflowerBlue ', 'DarkBlue', 'SlateBlue', 'MidnightBlue'];
+let key = process.env.GIPHY_TOKEN;
 //initial user is zero
 let user = 0;
 // add users
@@ -57,15 +61,36 @@ wss.on('connection', (ws) => {
   // receiving message from client
   ws.on('message', function incoming(data) {
     const obj = JSON.parse(data);
-    console.log(`user ${obj.username} said ${obj.content}`);
-    const objectToBroadcast = {
-      id: obj.id,
-      content: obj.content,
-      username: obj.username,
-      color: obj.color,
-      type: obj.type
-    };
-    wss.broadcastJSON(objectToBroadcast);
+    const regex = /^\/giphy(.*)/;
+    const matches = obj.content.match(regex);
+    if(matches) {
+      const qs = querystring.stringify({
+        api_key: key,
+        tag: matches[1]
+      })
+      fetch(`https://api.giphy.com/v1/gifs/random?${qs}`)
+        .then( resp => resp.json())
+        .then( json => {
+          obj.content = json.data.images.original.url;
+          wss.broadcastJSON({
+            id: obj.id,
+            content: obj.content,
+            username: obj.username,
+            type: obj.type,
+            color: obj.color
+          });
+        })
+    } else {
+      console.log(`user ${obj.username} said ${obj.content}`);
+      const objectToBroadcast = {
+        id: obj.id,
+        content: obj.content,
+        username: obj.username,
+        color: obj.color,
+        type: obj.type
+      };
+      wss.broadcastJSON(objectToBroadcast);
+    }
   });
   ws.on('close', function close() {
     console.log('Client disconnected')

@@ -20,6 +20,9 @@ When user logout the count change
 !["oneuserlogout"](https://github.com/Ethenalee/ChattyApp/blob/master/doc/logout.png?raw=true)
 Still they can chat after other user left
 !["oneuserlogout"](https://github.com/Ethenalee/ChattyApp/blob/master/doc/after%20one%20user%20logout.png?raw=true)
+Send by typing /giphy
+!["giphyfeature"](https://github.com/Ethenalee/ChattyApp/blob/master/doc/after%20one%20user%20logout.png?raw=true)
+
 
 ## Usage
 Share messages and pictures without having to register accounts.
@@ -31,6 +34,7 @@ Share messages and pictures without having to register accounts.
 * When the number of connected users changes, this count will be updated for all connected users
 * Different users' names will each be coloured differently
 * Send image with image address only
+* Send gif through Giphy API
 
 ## Dependencies
 - babel-core
