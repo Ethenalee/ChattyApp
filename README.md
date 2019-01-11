@@ -21,7 +21,7 @@ When user logout the count change
 Still they can chat after other user left
 !["oneuserlogout"](https://github.com/Ethenalee/ChattyApp/blob/master/doc/after%20one%20user%20logout.png?raw=true)
 Send by typing /giphy
-!["giphyfeature"](https://github.com/Ethenalee/ChattyApp/blob/master/doc/after%20one%20user%20logout.png?raw=true)
+!["giphyfeature"](https://github.com/Ethenalee/ChattyApp/blob/master/doc/giphy.png?raw=true)
 
 
 ## Usage
@@ -58,8 +58,11 @@ Share messages and pictures without having to register accounts.
 - webpack-dev-server
 
 ## Server side Dependencies
+- dotenv
 - exact
 - express
+- node-fetch
+- querystring
 - uuid
 - ws
 
