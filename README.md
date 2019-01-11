@@ -16,6 +16,9 @@ Although client change their username, their color does not change
 Send img valification
 only http://--.jpg type address can be shown img
 !["img"](https://github.com/Ethenalee/ChattyApp/blob/master/doc/img.png?raw=true)
+Send img with message
+whatever you type it will popup with img
+!["img"](https://github.com/Ethenalee/ChattyApp/blob/master/doc/img%20with%20message.png?raw=true)
 When user logout the count change
 !["oneuserlogout"](https://github.com/Ethenalee/ChattyApp/blob/master/doc/logout.png?raw=true)
 Still they can chat after other user left
