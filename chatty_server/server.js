@@ -31,9 +31,7 @@ const setColor = (color) => {
 const PORT = 3001;
 // Create a new express server
 const app = express();
-   // Make the express server serve static assets (html, javascript, css) from the /public folder
 
-// Create the WebSockets server
 app.get('/', (req, res) => {
   res.send('Hello!');
 });
@@ -52,15 +50,15 @@ wss.broadcast = function broadcast(data) {
 wss.broadcastJSON = obj => wss.broadcast(JSON.stringify(obj));
 
 wss.on('connection', (ws) => {
-  console.log('Client connected');
   // once its connect send users with updated num
   wss.broadcastJSON({
-    users: addUsers(user),
+    users: wss.clients.size,
     type: 'userlogin'
   });
   // receiving message from client
   ws.on('message', function incoming(data) {
     const obj = JSON.parse(data);
+    //check message contain giphy or not if contain connect to giphy
     const regex = /^\/giphy(.*)/;
     const matches = obj.content.match(regex);
     if(matches) {
@@ -81,7 +79,6 @@ wss.on('connection', (ws) => {
           });
         })
     } else {
-      console.log(`user ${obj.username} said ${obj.content}`);
       const objectToBroadcast = {
         id: obj.id,
         content: obj.content,
@@ -93,10 +90,9 @@ wss.on('connection', (ws) => {
     }
   });
   ws.on('close', function close() {
-    console.log('Client disconnected')
     // once its disconnect send users with updated num
     wss.broadcastJSON({
-      users: deleteUsers(user),
+      users: wss.clients.size,
       type: 'userlogout'
     });
     }

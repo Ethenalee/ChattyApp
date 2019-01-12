@@ -7,8 +7,8 @@ class Message extends Component {
     if(this.props.message.content.match(regex)) {
       return (
         <div>
-        <span>{this.props.message.content.match(regex)[0].replace(this.props.message.content.match(regex)[1], '')}</span><br />
-        <img className="img" src={this.props.message.content.match(regex)[1]} />
+          <span>{this.props.message.content.match(regex)[0].replace(this.props.message.content.match(regex)[1], '')}</span><br />
+          <img className="img" src={this.props.message.content.match(regex)[1]} />
         </div>
         )
     } else {

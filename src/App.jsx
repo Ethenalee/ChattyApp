@@ -5,7 +5,7 @@ const uuid = require('uuid/v4');
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       currentUser: {name: "Anonymous"},
       messages: [],
@@ -17,26 +17,37 @@ class App extends Component {
   componentDidMount() {
     this.socket = new WebSocket('ws://localhost:3001')
     this.socket.onopen = () => {
-      console.log('Connected to WebSocket');
     };
     // receiving message from server
     this.socket.onmessage = payload => {
-      console.log('Got message from server', payload);
       const json = JSON.parse(payload.data);
-      if(json.type === 'client_content' || json.type === 'client_notification' || json.type === 'giphy') {
-        this.setState({
-          messages: [...this.state.messages, json]
-        });
-      } else if(json.type === 'client_connect') {
-        this.setState({currentColor: json.color})
-      } else if(json.type === 'userlogin') {
-        this.setState({users: json.users})
-      } else if(json.type === 'userlogout') {
-        this.setState({users: json.users})
+      const type = json.type
+      switch(type) {
+        case 'client_content':
+        case 'client_notification':
+        case 'giphy':
+          this.setState({
+            messages: [...this.state.messages, json]
+          });
+          break;
+        case 'client_connect':
+          this.setState({
+            currentColor: json.color
+          });
+          break;
+        case 'userlogin':
+          this.setState({
+            users: json.users
+          });
+          break;
+        case 'userlogout' :
+          this.setState({
+            users: json.users
+          });
+          break;
       }
-    };
+    }
     this.socket.onclose = () => {
-      console.log('Disconnected from the WebSocket');
     };
   }
 
@@ -72,7 +83,7 @@ class App extends Component {
   };
   //addMessage and change currentUser//
   addMessage = content => {
-    if(content.firstChild.value !== '' && content.lastChild.value !== '') {
+    if(content.firstChild.value && content.lastChild.value) {
       if(this.state.currentUser.name != content.firstChild.value) {
         this.changeName(content.firstChild.value)
       }

@@ -72,6 +72,8 @@ Share messages and pictures without having to register accounts.
 ## Development setup
 
 - Install all dependencies using 'npm install' command
+- Go to chatty_server folder and Install all server side dependencies using 'npm install' command
+- create .env file in chatty_server folder and type gipy API in order to use giphy feature. Type this 'GIPHY_TOKEN=yourOwnAPIAddress' into .env file
 
 ## Release History
 
